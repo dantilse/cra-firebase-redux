@@ -1,46 +1,30 @@
 import { Component } from "react";
 import { withAuthorization } from "../Session";
 
-const UserList = ({ users }) => (
-  <ul>
-    {users.map((user) => (
-      <li key={user.uid}>
-        <div>
-          <strong>id:</strong> {user.uid}
-        </div>
-        <div>
-          <strong>email:</strong> {user.email}
-        </div>
-        <div>
-          <strong>username:</strong> {user.username}
-        </div>
-      </li>
-    ))}
-  </ul>
-);
-
 class Dashboard extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       loading: false,
-      users: [],
+      user: {},
     };
   }
 
   componentDidMount() {
     this.setState({ loading: true });
-
+    // .on() isn't necessary here, this info should only change from an edit page
+    // so the user would need to submit new data and navigate to this page
+    // TODO: convert this to a .once() call?
     this.props.firebase.users().on("value", (snapshot) => {
-      const usersObject = snapshot.val();
-      const usersList = Object.keys(usersObject).map((key) => ({
-        ...usersObject[key],
-        uid: key,
-      }));
+      const userObject = snapshot.val()[
+        // TODO: probably not best or most secure way to get this data,
+        // Trying to get a single user's data from a 'users' list
+        this.props.firebase.auth.currentUser.uid
+      ];
 
       this.setState({
-        users: usersList,
+        user: userObject,
         loading: false,
       });
     });
@@ -51,13 +35,19 @@ class Dashboard extends Component {
   }
 
   render() {
-    const { users, loading } = this.state;
+    const { user, loading } = this.state;
+    const { email, username } = user;
 
     return (
       <>
         <h1>Dashboard</h1>
-        {loading && <div>Loading...</div>}
-        <UserList users={users} />
+        {loading ? (
+          <div>Loading...</div>
+        ) : (
+          <p>
+            Welcome {username}: {email}
+          </p>
+        )}
       </>
     );
   }

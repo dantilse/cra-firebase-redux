@@ -1,6 +1,7 @@
 import "./App.css";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import Account from "../Account";
+import Admin from "../Admin";
 import Dashboard from "../Dashboard";
 import Login from "../Login";
 import Registration from "../Registration";
@@ -26,6 +27,7 @@ const App = () => (
       <div className="app-body">
         <div className="container">
           <Route exact path={ROUTES.ACCOUNT} component={Account} />
+          <Route exact path={ROUTES.ADMIN} component={Admin} />
           <Route exact path={ROUTES.LANDING} component={LandingPage} />
           <Route exact path={ROUTES.REGISTER} component={Registration} />
           <Route exact path={ROUTES.LOGIN} component={Login} />
