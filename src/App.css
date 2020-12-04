@@ -1,0 +1,51 @@
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+.container {
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+  max-width: 960px;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.app-header {
+  padding-top: 30px;
+  padding-bottom: 30px;
+  text-align: right;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.app-body {
+  flex-grow: 1;
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+.app-footer {
+  padding-top: 30px;
+  padding-bottom: 30px;
+  text-align: center;
+  border-top: 1px solid #e5e5e5;
+}
+
+
