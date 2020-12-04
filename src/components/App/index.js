@@ -1,12 +1,14 @@
 import "./App.css";
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import Dashboard from "./Dashboard";
-import Login from "./Login";
-import Registration from "./Registration";
-import LandingPage from "./LandingPage";
-import Navigation from "./Navigation";
-import { withAuthentication } from "./Session";
-import * as ROUTES from "./constants/routes";
+import Account from "../Account";
+import Dashboard from "../Dashboard";
+import Login from "../Login";
+import Registration from "../Registration";
+import LandingPage from "../LandingPage";
+import PasswordReset from "../PasswordReset";
+import Navigation from "../Navigation";
+import { withAuthentication } from "../Session";
+import * as ROUTES from "../../constants/routes";
 
 // TODO: import/export all pages/components for simplicity?
 // ie. import { Navigation, Header, Footer } from './components/(index);
@@ -23,10 +25,12 @@ const App = () => (
       </header>
       <div className="app-body">
         <div className="container">
+          <Route exact path={ROUTES.ACCOUNT} component={Account} />
           <Route exact path={ROUTES.LANDING} component={LandingPage} />
           <Route exact path={ROUTES.REGISTER} component={Registration} />
           <Route exact path={ROUTES.LOGIN} component={Login} />
           <Route exact path={ROUTES.DASHBOARD} component={Dashboard} />
+          <Route exact path={ROUTES.PASSWORD_RESET} component={PasswordReset} />
         </div>
       </div>
     </Router>

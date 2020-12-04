@@ -1,7 +1,7 @@
 import { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
-import { withFirebase } from "./Firebase";
-import * as ROUTES from "./constants/routes";
+import { withFirebase } from "../Firebase";
+import * as ROUTES from "../../constants/routes";
 
 const Registration = () => (
   <>
@@ -32,6 +32,11 @@ class RegistrationFormBase extends Component {
 
     this.props.firebase
       .handleCreateUserWithEmailAndPassword(email, passwordOne)
+      .then((authUser) => {
+        return this.props.firebase
+          .user(authUser.user.uid)
+          .set({ username, email });
+      })
       .then((authUser) => {
         this.setState({ ...INITIAL_STATE });
         this.props.history.push(ROUTES.DASHBOARD);

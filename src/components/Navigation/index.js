@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
-import SignOutButton from "./SignOut";
-import { AuthUserContext } from "./Session";
-import * as ROUTES from "./constants/routes";
+import SignOutButton from "../SignOut";
+import { AuthUserContext } from "../Session";
+import * as ROUTES from "../../constants/routes";
 
 const Navigation = () => (
   <nav>
@@ -18,6 +18,9 @@ const NavigationAuth = () => (
     </li>
     <li>
       <Link to={ROUTES.DASHBOARD}>Dashboard</Link>
+    </li>
+    <li>
+      <Link to={ROUTES.ACCOUNT}>Account</Link>
     </li>
     <li>
       <SignOutButton />

@@ -1,13 +1,15 @@
 import { Component } from "react";
 import { withRouter } from "react-router-dom";
-import { withFirebase } from "./Firebase";
-import * as ROUTES from "./constants/routes";
-import { RegistrationLink } from "./Registration";
+import { withFirebase } from "../Firebase";
+import * as ROUTES from "../../constants/routes";
+import { RegistrationLink } from "../Registration";
+import { PasswordResetLink } from "../PasswordReset";
 
 const Login = () => (
   <>
     <h1>Login page</h1>
     <LoginForm />
+    <PasswordResetLink />
     <RegistrationLink />
   </>
 );
