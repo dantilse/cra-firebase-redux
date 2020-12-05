@@ -1,57 +1,38 @@
-import { Component } from "react";
-import { withAuthorization } from "../Session";
+import { useEffect, useState } from "react";
+import { AuthUserContext, withAuthorization } from "../Session";
 
-class Dashboard extends Component {
-  constructor(props) {
-    super(props);
+const Dashboard = (props) => {
+  const { firebase } = props;
+  const { auth, db } = firebase;
 
-    this.state = {
-      loading: false,
-      user: {},
-    };
-  }
+  const [contacts, setContacts] = useState([]);
 
-  componentDidMount() {
-    this.setState({ loading: true });
-    // .on() isn't necessary here, this info should only change from an edit page
-    // so the user would need to submit new data and navigate to this page
-    // TODO: convert this to a .once() call?
-    this.props.firebase.users().on("value", (snapshot) => {
-      const userObject = snapshot.val()[
-        // TODO: probably not best or most secure way to get this data,
-        // Trying to get a single user's data from a 'users' list
-        this.props.firebase.auth.currentUser.uid
-      ];
-
-      this.setState({
-        user: userObject,
-        loading: false,
-      });
+  useEffect(() => {
+    db.ref(`/users/${auth.currentUser.uid}`).once("value", (snapshot) => {
+      console.log(snapshot.val(), "vaule");
+      setContacts(snapshot.val().contacts);
     });
-  }
+  }, [db, auth.currentUser.uid]);
 
-  componentWillUnmount() {
-    this.props.firebase.users().off();
-  }
-
-  render() {
-    const { user, loading } = this.state;
-    const { email, username } = user;
-
-    return (
-      <>
-        <h1>Dashboard</h1>
-        {loading ? (
-          <div>Loading...</div>
-        ) : (
-          <p>
-            Welcome {username}: {email}
-          </p>
-        )}
-      </>
-    );
-  }
-}
+  return (
+    <AuthUserContext.Consumer>
+      {(authUser) => (
+        <>
+          <h1>Dashboard: {authUser.email}</h1>
+          <p>Welcome</p>
+          <pre>
+            <code>{JSON.stringify(authUser, null, 2)}</code>
+          </pre>
+          {contacts && contacts.length > 0 ? (
+            <p>We have contacts: {contacts.length}</p>
+          ) : (
+            <p>No contacts to display</p>
+          )}
+        </>
+      )}
+    </AuthUserContext.Consumer>
+  );
+};
 
 const condition = (authUser) => !!authUser;
 

@@ -35,7 +35,7 @@ class RegistrationFormBase extends Component {
       .then((authUser) => {
         return this.props.firebase
           .user(authUser.user.uid)
-          .set({ username, email });
+          .set({ userData: { username, email } });
       })
       .then((authUser) => {
         this.setState({ ...INITIAL_STATE });
