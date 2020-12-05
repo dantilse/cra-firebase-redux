@@ -1,4 +1,4 @@
-import { Component } from "react";
+import { useState } from "react";
 import { Link, withRouter } from "react-router-dom";
 import { withFirebase } from "../Firebase";
 import * as ROUTES from "../../constants/routes";
@@ -10,109 +10,196 @@ const Registration = () => (
   </>
 );
 
-const INITIAL_STATE = {
-  username: "",
-  email: "",
-  passwordOne: "",
-  passwordTwo: "",
-  error: null,
-};
+const RegistrationFormBase = (props) => {
+  const INITIAL_STATE = {
+    username: "",
+    email: "",
+    passwordOne: "",
+    passwordTwo: "",
+    error: null,
+  };
+  const [formState, setFormState] = useState(INITIAL_STATE);
+  const { username, email, passwordOne, passwordTwo, error } = formState;
 
-class RegistrationFormBase extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = { ...INITIAL_STATE };
-  }
-
-  onSubmit = (event) => {
-    const { username, email, passwordOne } = this.state;
-
+  function onSubmit(event) {
     event.preventDefault();
 
-    this.props.firebase
+    props.firebase
       .handleCreateUserWithEmailAndPassword(email, passwordOne)
       .then((authUser) => {
-        return this.props.firebase
-          .user(authUser.user.uid)
-          .set({ userData: { username, email } });
+        return props.firebase.user(authUser.user.uid).set({
+          userData: { username, email },
+        });
       })
       .then((authUser) => {
-        this.setState({ ...INITIAL_STATE });
-        this.props.history.push(ROUTES.DASHBOARD);
+        setFormState(INITIAL_STATE);
+        props.history.push(ROUTES.DASHBOARD);
       })
       .catch((error) => {
-        this.setState({ error });
+        setFormState({ error: error });
       });
-  };
-
-  onChange = (event) => {
-    this.setState({ [event.target.name]: event.target.value });
-  };
-
-  render() {
-    const { username, email, passwordOne, passwordTwo, error } = this.state;
-    const isInvalid =
-      passwordOne !== passwordTwo ||
-      passwordOne === "" ||
-      email === "" ||
-      username === "";
-
-    return (
-      <form onSubmit={this.onSubmit}>
-        <div>
-          <label htmlFor="username">Username</label>
-          <input
-            id="username"
-            name="username"
-            value={username}
-            onChange={this.onChange}
-            type="text"
-            placeholder="Full name"
-          />
-        </div>
-        <div>
-          <label htmlFor="email">Email</label>
-          <input
-            id="email"
-            name="email"
-            value={email}
-            onChange={this.onChange}
-            type="email"
-            placeholder="Email address"
-          />
-        </div>
-        <div>
-          <label htmlFor="passwordOne">Password</label>
-          <input
-            id="passwordOne"
-            name="passwordOne"
-            value={passwordOne}
-            onChange={this.onChange}
-            type="password"
-            placeholder="Password"
-          />
-        </div>
-        <div>
-          <label htmlFor="passwordTwo">Confirm password</label>
-          <input
-            id="passwordTwo"
-            name="passwordTwo"
-            value={passwordTwo}
-            onChange={this.onChange}
-            type="password"
-            placeholder="Confirm password"
-          />
-        </div>
-        <button disabled={isInvalid} type="submit">
-          Register
-        </button>
-
-        {error && <p>{error.message}</p>}
-      </form>
-    );
   }
-}
+
+  function onChange(event) {
+    setFormState({ ...formState, [event.target.name]: event.target.value });
+  }
+
+  const isInvalid =
+    passwordOne !== passwordTwo ||
+    passwordOne === "" ||
+    email === "" ||
+    username === "";
+
+  return (
+    <form onSubmit={(e) => onSubmit(e)}>
+      <div>
+        <label htmlFor="username">Username</label>
+        <input
+          id="username"
+          name="username"
+          value={username}
+          onChange={(e) => onChange(e)}
+          type="text"
+          placeholder="Full name"
+        />
+      </div>
+      <div>
+        <label htmlFor="email">Email</label>
+        <input
+          id="email"
+          name="email"
+          value={email}
+          onChange={(e) => onChange(e)}
+          type="email"
+          placeholder="Email address"
+        />
+      </div>
+      <div>
+        <label htmlFor="passwordOne">Password</label>
+        <input
+          id="passwordOne"
+          name="passwordOne"
+          value={passwordOne}
+          onChange={(e) => onChange(e)}
+          type="password"
+          placeholder="Password"
+        />
+      </div>
+      <div>
+        <label htmlFor="passwordTwo">Confirm password</label>
+        <input
+          id="passwordTwo"
+          name="passwordTwo"
+          value={passwordTwo}
+          onChange={(e) => onChange(e)}
+          type="password"
+          placeholder="Confirm password"
+        />
+      </div>
+      <button disabled={isInvalid} type="submit">
+        Register
+      </button>
+
+      {error && <p>{error.message}</p>}
+    </form>
+  );
+};
+
+// class RegistrationFormBase extends Component {
+//   constructor(props) {
+//     super(props);
+
+//     this.state = { ...INITIAL_STATE };
+//   }
+
+//   onSubmit = (event) => {
+//     const { username, email, passwordOne } = this.state;
+
+//     event.preventDefault();
+
+//     this.props.firebase
+//       .handleCreateUserWithEmailAndPassword(email, passwordOne)
+//       .then((authUser) => {
+//         return this.props.firebase
+//           .user(authUser.user.uid)
+//           .set({ userData: { username, email } });
+//       })
+//       .then((authUser) => {
+//         this.setState({ ...INITIAL_STATE });
+//         this.props.history.push(ROUTES.DASHBOARD);
+//       })
+//       .catch((error) => {
+//         this.setState({ error });
+//       });
+//   };
+
+//   onChange = (event) => {
+//     this.setState({ [event.target.name]: event.target.value });
+//   };
+
+//   render() {
+//     const { username, email, passwordOne, passwordTwo, error } = this.state;
+//     const isInvalid =
+//       passwordOne !== passwordTwo ||
+//       passwordOne === "" ||
+//       email === "" ||
+//       username === "";
+
+//     return (
+//       <form onSubmit={this.onSubmit}>
+//         <div>
+//           <label htmlFor="username">Username</label>
+//           <input
+//             id="username"
+//             name="username"
+//             value={username}
+//             onChange={this.onChange}
+//             type="text"
+//             placeholder="Full name"
+//           />
+//         </div>
+//         <div>
+//           <label htmlFor="email">Email</label>
+//           <input
+//             id="email"
+//             name="email"
+//             value={email}
+//             onChange={this.onChange}
+//             type="email"
+//             placeholder="Email address"
+//           />
+//         </div>
+//         <div>
+//           <label htmlFor="passwordOne">Password</label>
+//           <input
+//             id="passwordOne"
+//             name="passwordOne"
+//             value={passwordOne}
+//             onChange={this.onChange}
+//             type="password"
+//             placeholder="Password"
+//           />
+//         </div>
+//         <div>
+//           <label htmlFor="passwordTwo">Confirm password</label>
+//           <input
+//             id="passwordTwo"
+//             name="passwordTwo"
+//             value={passwordTwo}
+//             onChange={this.onChange}
+//             type="password"
+//             placeholder="Confirm password"
+//           />
+//         </div>
+//         <button disabled={isInvalid} type="submit">
+//           Register
+//         </button>
+
+//         {error && <p>{error.message}</p>}
+//       </form>
+//     );
+//   }
+// }
 
 const RegistrationLink = () => (
   <p>
