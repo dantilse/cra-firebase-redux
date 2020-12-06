@@ -1,11 +1,25 @@
 # cra-firebase-redux
-Create React App using Firebase and Redux as a starter template
+
+Create React App starter template using Firebase Authentication and Real-time Database. I'm expecting to add Redux as a global state management system, but I'd like to see how far I can take this using the Context API before doing so.
+
+## Getting Started
+
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app). Read below the horizontal rule for the Create React App general documentation.
+
+## Firebase
+
+In order to use Firebase, you'll need to set up an account [here](https://firebase.google.com/). Once you create an account, and set up a database, you'll need to copy the provided values in the Project Settings into an `.env` file in the `src/` directory. This should look like so:
+
+```javascript
+REACT_APP_FIREBASE_API_KEY=xyz123
+REACT_APP_FIREBASE_AUTH_DOMAIN=xyz123
+REACT_APP_FIREBASE_DATABASE_URL=xyz123
+REACT_APP_FIREBASE_PROJECT_ID=xyz123
+REACT_APP_FIREBASE_STORAGE_BUCKET=xyz123
+REACT_APP_FIREBASE_MESSAGING_SENDER_ID=xyz123
+```
 
 ---
-
-## Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
 
