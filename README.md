@@ -8,7 +8,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Firebase
 
-In order to use Firebase, you'll need to set up an account [here](https://firebase.google.com/). Once you create an account, and set up a database, you'll need to copy the provided values in the Project Settings into an `.env` file in the `src/` directory. This should look like so:
+In order to use Firebase, you'll need to set up an account [here](https://firebase.google.com/). Once you create an account, and set up a database, you'll need to copy the provided values in the Project Settings into an `.env` file in the root directory. This should look like so:
 
 ```javascript
 REACT_APP_FIREBASE_API_KEY=xyz123
