@@ -25,8 +25,24 @@
 .app-header {
   padding-top: 30px;
   padding-bottom: 30px;
-  text-align: right;
   border-bottom: 1px solid #e5e5e5;
+}
+
+.app-header ul {
+  margin-right: -10px;
+  margin-left: -10px;
+  padding: 0;
+}
+
+.app-header li {
+  display: inline-block;
+  padding-right: 10px;
+  padding-left: 10px;
+  margin-bottom: 10px;
+}
+
+.app-header ul a {
+  text-decoration: none;
 }
 
 .app-body {
