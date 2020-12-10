@@ -6,21 +6,35 @@ const Dashboard = (props) => {
 
   const [contacts, setContacts] = useState([]);
   const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
 
   useEffect(() => {
+    const onChange = (snapshot) => {
+      try {
+        let { contacts = [], userData = {} } = snapshot.val();
+        setContacts(contacts);
+        setUsername(userData.username);
+        setEmail(userData.email);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
     // removing auth.currentUser allows user to see other user's info
     // TODO: fix database rules to make this more secure
-    db.ref(`/users/${auth.currentUser.uid}`).once("value", (snapshot) => {
-      setContacts(snapshot.val().contacts);
-      setUsername(snapshot.val().userData.username);
-    });
+    const userRef = db.ref(`/users/${auth.currentUser.uid}`);
+    userRef.on("value", onChange);
+
+    return () => {
+      userRef.off("value", onChange);
+    };
   }, [db, auth.currentUser.uid]);
 
   return (
     <AuthUserContext.Consumer>
       {(authUser) => (
         <>
-          <h1>Dashboard: {authUser.email}</h1>
+          <h1>Dashboard: {email}</h1>
           <p>Welcome {username}</p>
           <pre>
             <code>{JSON.stringify(authUser, null, 2)}</code>
@@ -30,6 +44,9 @@ const Dashboard = (props) => {
           ) : (
             <p>No contacts to display</p>
           )}
+          <pre>
+            <code>{JSON.stringify(contacts, null, 2)}</code>
+          </pre>
         </>
       )}
     </AuthUserContext.Consumer>

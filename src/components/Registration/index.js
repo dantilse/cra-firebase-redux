@@ -10,7 +10,7 @@ const Registration = () => (
   </>
 );
 
-const RegistrationFormBase = (props) => {
+const RegistrationFormBase = ({ firebase, history }) => {
   const INITIAL_STATE = {
     username: "",
     email: "",
@@ -21,23 +21,23 @@ const RegistrationFormBase = (props) => {
   const [formState, setFormState] = useState(INITIAL_STATE);
   const { username, email, passwordOne, passwordTwo, error } = formState;
 
-  function onSubmit(event) {
+  async function onSubmit(event) {
     event.preventDefault();
-
-    props.firebase
-      .handleCreateUserWithEmailAndPassword(email, passwordOne)
-      .then((authUser) => {
-        return props.firebase.user(authUser.user.uid).set({
-          userData: { username, email },
-        });
-      })
-      .then((authUser) => {
-        setFormState(INITIAL_STATE);
-        props.history.push(ROUTES.DASHBOARD);
-      })
-      .catch((error) => {
-        setFormState({ error: error });
+    try {
+      const { user } = await firebase.handleCreateUserWithEmailAndPassword(
+        email,
+        passwordOne
+      );
+      user.updateProfile({ displayName: username });
+      firebase.user(firebase.auth.currentUser.uid).set({
+        userData: { username, email },
       });
+
+      setFormState(INITIAL_STATE);
+      history.push(ROUTES.DASHBOARD);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   function onChange(event) {
