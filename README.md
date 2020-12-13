@@ -2,6 +2,10 @@
 
 Create React App starter template using Firebase Authentication and Real-time Database. I'm expecting to add Redux as a global state management system, but I'd like to see how far I can take this using the Context API before doing so.
 
+##
+
+Update: At a fork in the road regarding setting up the data structure and think Google Firestore may be a better solution than their Realtime Database. Holding a lot of local changes while I spin up a Firestore project to see if that solution works better.
+
 ## Getting Started
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app). Read below the horizontal rule for the Create React App general documentation.
