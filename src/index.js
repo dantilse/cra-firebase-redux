@@ -5,6 +5,7 @@ import App from "./components/App";
 import Firebase, { FirebaseContext } from "./components/Firebase";
 import reportWebVitals from "./reportWebVitals";
 
+// TODO: Wrap application with Providers (user | database)
 ReactDOM.render(
   <React.StrictMode>
     <FirebaseContext.Provider value={new Firebase()}>

@@ -2,6 +2,8 @@ import { Component } from "react";
 import { Link } from "react-router-dom";
 import { withFirebase } from "../Firebase";
 import * as ROUTES from "../../constants/routes";
+import TextInput from "../TextInput";
+import Button from "../Button";
 
 // TODO: email should be invalid if email matches current email address
 
@@ -48,20 +50,16 @@ class PasswordResetFormBase extends Component {
 
     return (
       <form onSubmit={this.onSubmit}>
-        <div>
-          <label htmlFor="email">Email</label>
-          <input
-            id="email"
-            name="email"
-            value={email}
-            onChange={this.onChange}
-            type="email"
-            placeholder="Email address"
-          />
-        </div>
-        <button disabled={isInvalid} type="submit">
-          Reset password
-        </button>
+        <TextInput
+          id="email"
+          label="Email"
+          type="email"
+          value={email}
+          onChange={this.onChange}
+        />
+        <Button type="submit" disabled={isInvalid}>
+          Reset Password
+        </Button>
 
         {error && <p>{error.message}</p>}
       </form>

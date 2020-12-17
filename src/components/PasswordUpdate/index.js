@@ -1,5 +1,7 @@
 import { Component } from "react";
 import { withFirebase } from "../Firebase";
+import TextInput from "../TextInput";
+import Button from "../Button";
 
 // TODO: email should be invalid if email matches current email address
 
@@ -39,31 +41,23 @@ class PasswordUpdateForm extends Component {
 
     return (
       <form onSubmit={this.onSubmit}>
-        <div>
-          <label htmlFor="passwordOne">New Password</label>
-          <input
-            id="passwordOne"
-            name="passwordOne"
-            value={passwordOne}
-            onChange={this.onChange}
-            type="password"
-            placeholder="New Password"
-          />
-        </div>
-        <div>
-          <label htmlFor="passwordTwo">Confirm Password</label>
-          <input
-            id="passwordTwo"
-            name="passwordTwo"
-            value={passwordTwo}
-            onChange={this.onChange}
-            type="password"
-            placeholder="Confirm Password"
-          />
-        </div>
-        <button disabled={isInvalid} type="submit">
-          Reset password
-        </button>
+        <TextInput
+          id="passwordOne"
+          label="New Password"
+          type="password"
+          value={passwordOne}
+          onChange={this.onChange}
+        />
+        <TextInput
+          id="passwordTwo"
+          label="Confirm Password"
+          type="password"
+          value={passwordTwo}
+          onChange={this.onChange}
+        />
+        <Button type="submit" disabled={isInvalid}>
+          Reset Password
+        </Button>
 
         {error && <p>{error.message}</p>}
       </form>

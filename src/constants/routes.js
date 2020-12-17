@@ -1,4 +1,5 @@
 export const ACCOUNT = "/account";
+export const ADDCONTACT = "/add-contact";
 export const ADMIN = "/admin";
 export const DASHBOARD = "/dashboard";
 export const LANDING = "/";

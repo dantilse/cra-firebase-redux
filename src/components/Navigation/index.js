@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import SignOutButton from "../SignOut";
 import { AuthUserContext } from "../Session";
 import * as ROUTES from "../../constants/routes";
@@ -11,19 +11,25 @@ const Navigation = () => (
   </nav>
 );
 
+const MenuLink = ({ to, children }) => (
+  <NavLink exact to={to} activeStyle={{ textDecoration: "underline" }}>
+    {children}
+  </NavLink>
+);
+
 const NavigationAuth = () => (
   <ul>
     <li>
-      <Link to={ROUTES.LANDING}>Landing auth</Link>
+      <MenuLink to={ROUTES.LANDING}>Landing auth</MenuLink>
     </li>
     <li>
-      <Link to={ROUTES.DASHBOARD}>Dashboard</Link>
+      <MenuLink to={ROUTES.DASHBOARD}>Dashboard</MenuLink>
     </li>
     <li>
-      <Link to={ROUTES.ACCOUNT}>Account</Link>
+      <MenuLink to={ROUTES.ACCOUNT}>Account</MenuLink>
     </li>
     <li>
-      <Link to={ROUTES.ADMIN}>Admin</Link>
+      <MenuLink to={ROUTES.ADMIN}>Admin</MenuLink>
     </li>
     <li>
       <SignOutButton />
@@ -34,13 +40,13 @@ const NavigationAuth = () => (
 const NavigationNoAuth = () => (
   <ul>
     <li>
-      <Link to={ROUTES.LANDING}>Landing no auth</Link>
+      <MenuLink to={ROUTES.LANDING}>Landing no auth</MenuLink>
     </li>
     <li>
-      <Link to={ROUTES.REGISTER}>Register</Link>
+      <MenuLink to={ROUTES.REGISTER}>Register</MenuLink>
     </li>
     <li>
-      <Link to={ROUTES.LOGIN}>Login</Link>
+      <MenuLink to={ROUTES.LOGIN}>Login</MenuLink>
     </li>
   </ul>
 );

@@ -2,6 +2,8 @@ import { useState } from "react";
 import { Link, withRouter } from "react-router-dom";
 import { withFirebase } from "../Firebase";
 import * as ROUTES from "../../constants/routes";
+import Button from "../Button";
+import TextInput from "../TextInput";
 
 const Registration = () => (
   <>
@@ -36,7 +38,8 @@ const RegistrationFormBase = ({ firebase, history }) => {
       setFormState(INITIAL_STATE);
       history.push(ROUTES.DASHBOARD);
     } catch (error) {
-      console.error(error);
+      setFormState({ ...formState, error });
+      console.error("submit error", error);
     }
   }
 
@@ -52,53 +55,37 @@ const RegistrationFormBase = ({ firebase, history }) => {
 
   return (
     <form onSubmit={(e) => onSubmit(e)}>
-      <div>
-        <label htmlFor="username">Username</label>
-        <input
-          id="username"
-          name="username"
-          value={username}
-          onChange={(e) => onChange(e)}
-          type="text"
-          placeholder="Full name"
-        />
-      </div>
-      <div>
-        <label htmlFor="email">Email</label>
-        <input
-          id="email"
-          name="email"
-          value={email}
-          onChange={(e) => onChange(e)}
-          type="email"
-          placeholder="Email address"
-        />
-      </div>
-      <div>
-        <label htmlFor="passwordOne">Password</label>
-        <input
-          id="passwordOne"
-          name="passwordOne"
-          value={passwordOne}
-          onChange={(e) => onChange(e)}
-          type="password"
-          placeholder="Password"
-        />
-      </div>
-      <div>
-        <label htmlFor="passwordTwo">Confirm password</label>
-        <input
-          id="passwordTwo"
-          name="passwordTwo"
-          value={passwordTwo}
-          onChange={(e) => onChange(e)}
-          type="password"
-          placeholder="Confirm password"
-        />
-      </div>
-      <button disabled={isInvalid} type="submit">
+      <TextInput
+        id="username"
+        label="Username"
+        type="text"
+        value={username}
+        onChange={(e) => onChange(e)}
+      />
+      <TextInput
+        id="email"
+        label="Email"
+        type="email"
+        value={email}
+        onChange={(e) => onChange(e)}
+      />
+      <TextInput
+        id="passwordOne"
+        label="Password"
+        type="password"
+        value={passwordOne}
+        onChange={(e) => onChange(e)}
+      />
+      <TextInput
+        id="passwordTwo"
+        label="Confirm Password"
+        type="password"
+        value={passwordTwo}
+        onChange={(e) => onChange(e)}
+      />
+      <Button disabled={isInvalid} type="submit">
         Register
-      </button>
+      </Button>
 
       {error && <p>{error.message}</p>}
     </form>

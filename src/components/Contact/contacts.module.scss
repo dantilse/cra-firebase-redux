@@ -1,0 +1,33 @@
+.contact {
+  display: flex;
+  align-items: center;
+  // this should be handled in a CSS reset file
+  margin: 0;
+  margin-bottom: 30px;
+}
+
+.list {
+  column-count: 2;
+  column-gap: 30px;
+  column-width: 280px;
+}
+
+.img {
+  border-radius: 50%;
+}
+
+.details {
+  padding-left: 15px;
+}
+
+.name {
+  margin-top: 0;
+  margin-bottom: 5px;
+}
+
+.email {
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 14px;
+  color: #777;
+}

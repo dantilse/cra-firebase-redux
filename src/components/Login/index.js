@@ -4,6 +4,8 @@ import { withFirebase } from "../Firebase";
 import * as ROUTES from "../../constants/routes";
 import { RegistrationLink } from "../Registration";
 import { PasswordResetLink } from "../PasswordReset";
+import TextInput from "../TextInput";
+import Button from "../Button";
 
 const Login = () => (
   <>
@@ -53,31 +55,23 @@ class LoginFormBase extends Component {
 
     return (
       <form onSubmit={this.onSubmit}>
-        <div>
-          <label htmlFor="email">Email</label>
-          <input
-            id="email"
-            name="email"
-            value={email}
-            onChange={this.onChange}
-            type="email"
-            placeholder="Email address"
-          />
-        </div>
-        <div>
-          <label htmlFor="password">Password</label>
-          <input
-            id="password"
-            name="password"
-            value={password}
-            onChange={this.onChange}
-            type="password"
-            placeholder="Password"
-          />
-        </div>
-        <button disabled={isInvalid} type="submit">
+        <TextInput
+          id="email"
+          label="Email"
+          type="email"
+          value={email}
+          onChange={this.onChange}
+        />
+        <TextInput
+          id="password"
+          label="Password"
+          type="password"
+          value={password}
+          onChange={this.onChange}
+        />
+        <Button disabled={isInvalid} type="submit">
           Login
-        </button>
+        </Button>
 
         {error && <p>{error.message}</p>}
       </form>

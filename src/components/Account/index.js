@@ -4,7 +4,7 @@ import { PasswordResetForm } from "../PasswordReset";
 import PasswordUpdateForm from "../PasswordUpdate";
 
 const Account = (props) => {
-  const { auth, db } = props.firebase;
+  const { auth, user } = props.firebase;
 
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -22,12 +22,12 @@ const Account = (props) => {
 
     // removing auth.currentUser allows user to see other user's info
     // TODO: fix database rules to make this more secure
-    const userRef = db.ref(`/users/${auth.currentUser.uid}`);
+    const userRef = user(auth.currentUser.uid);
 
     userRef.on("value", onValueChange);
 
     return () => userRef.off("value", onValueChange);
-  }, [db, auth.currentUser.uid]);
+  }, [user, auth.currentUser.uid]);
 
   return (
     <AuthUserContext.Consumer>

@@ -1,9 +1,10 @@
 import { withFirebase } from "../Firebase";
+import Button from "../Button";
 
 const SignOutButton = ({ firebase }) => (
-  <button type="button" onClick={firebase.handleSignOut}>
+  <Button type="button" onClick={firebase.handleSignOut}>
     Sign Out
-  </button>
+  </Button>
 );
 
 export default withFirebase(SignOutButton);

@@ -1,7 +1,9 @@
 import "./App.css";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import Account from "../Account";
+import AddContact from "../AddContact";
 import Admin from "../Admin";
+import ContactPage from "../ContactPage";
 import Dashboard from "../Dashboard";
 import Login from "../Login";
 import Registration from "../Registration";
@@ -16,39 +18,48 @@ import * as ROUTES from "../../constants/routes";
 // Also, divide pages and components: pages may use common components
 // - but need to be set up for routes specifically
 
-const App = () => (
-  <div className="app">
-    <Router>
-      <header className="app-header">
-        <div className="container">
-          <Navigation />
+const App = (props) => {
+  const { currentUser } = props.firebase.auth;
+  return (
+    <div className="app">
+      <Router>
+        <header className="app-header">
+          <div className="container">
+            <Navigation />
+          </div>
+        </header>
+        <div className="app-body">
+          <div className="container">
+            <Route exact path={ROUTES.ACCOUNT} component={Account} />
+            <Route exact path={ROUTES.ADDCONTACT} component={AddContact} />
+            <Route exact path={ROUTES.ADMIN} component={Admin} />
+            <Route exact path={ROUTES.LANDING} component={LandingPage} />
+            <Route exact path={ROUTES.REGISTER} component={Registration} />
+            <Route exact path={ROUTES.LOGIN} component={Login} />
+            <Route exact path={ROUTES.DASHBOARD} component={Dashboard} />
+            <Route exact path={"/dashboard/:id"} component={ContactPage} />
+            <Route
+              exact
+              path={ROUTES.PASSWORD_RESET}
+              component={PasswordReset}
+            />
+          </div>
         </div>
-      </header>
-      <div className="app-body">
+      </Router>
+      <div className="app-footer">
         <div className="container">
-          <Route exact path={ROUTES.ACCOUNT} component={Account} />
-          <Route exact path={ROUTES.ADMIN} component={Admin} />
-          <Route exact path={ROUTES.LANDING} component={LandingPage} />
-          <Route exact path={ROUTES.REGISTER} component={Registration} />
-          <Route exact path={ROUTES.LOGIN} component={Login} />
-          <Route exact path={ROUTES.DASHBOARD} component={Dashboard} />
-          <Route exact path={ROUTES.PASSWORD_RESET} component={PasswordReset} />
+          <a
+            className="app-link"
+            href="https://reactjs.org"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Create React App Docs
+          </a>
         </div>
-      </div>
-    </Router>
-    <div className="app-footer">
-      <div className="container">
-        <a
-          className="app-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Create React App Docs
-        </a>
       </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default withAuthentication(App);
